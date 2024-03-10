@@ -1,4 +1,4 @@
-module gows
+module medclin
 
 go 1.21.5
 

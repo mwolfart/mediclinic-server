@@ -13,7 +13,8 @@ services:
       - DB_PASSWORD=postgres
       - DB_NAME=postgres
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - 8080:8080
     networks:
@@ -30,6 +31,11 @@ services:
       - 5432:5432
     networks:
       - db-net
+    healthcheck:
+        test: /usr/bin/pg_isready
+        interval: 5s
+        timeout: 10s
+        retries: 5
 
   adminer:
     image: adminer
