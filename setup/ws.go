@@ -19,12 +19,6 @@ func StartWS() {
 	log.Printf("Starting server at port %d\n", PORT)
 	router := gin.Default()
 
-	// r.GET("/users", func(c *gin.Context) {
-	// 	c.JSON(http.StatusOK, gin.H{
-	// 		"message": "List of users",
-	// 	})
-	// })
-
 	for _, r := range routes {
 		router.Handle(r.Method, "/user", r.Handler)
 	}
@@ -40,7 +34,7 @@ func StartWS() {
 		}
 	}()
 
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 	log.Println("Shutdown Server ...")
@@ -51,9 +45,7 @@ func StartWS() {
 		log.Fatal("Server Shutdown:", err)
 	}
 
-	select {
-	case <-ctx.Done():
-		log.Println("Timeout of 5 seconds.")
-	}
+	<-ctx.Done()
+	log.Println("Timeout of 5 seconds.")
 	log.Println("Server exiting")
 }
