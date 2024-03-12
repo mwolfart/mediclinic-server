@@ -9,9 +9,9 @@ services:
     environment:
       - DB_HOSTNAME=db
       - DB_PORT=5432
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=postgres
+      - DB_USERNAME=dbadmin
+      - DB_PASSWORD=keyboard
+      - DB_NAME=medical-clinic
     depends_on:
       db:
         condition: service_healthy
@@ -24,15 +24,15 @@ services:
     image: postgres:16.2
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_USER: dbadmin
+      POSTGRES_PASSWORD: keyboard
+      POSTGRES_DB: medical-clinic
     ports:
       - 5432:5432
     networks:
       - db-net
     healthcheck:
-        test: /usr/bin/pg_isready
+        test: /usr/bin/pg_isready -d medical-clinic -U dbadmin
         interval: 5s
         timeout: 10s
         retries: 5

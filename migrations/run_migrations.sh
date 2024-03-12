@@ -1,3 +1,3 @@
 #!/bin/bash
 
-goose postgres "host=db port=5432 user=postgres password=postgres dbname=postgres sslmode=disable" up
+goose postgres "host=$DB_HOSTNAME port=$DB_PORT user=$DB_USERNAME password=$DB_PASSWORD dbname=$DB_NAME sslmode=disable" up
