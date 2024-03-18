@@ -1,14 +1,14 @@
 -- +goose Up
 -- +goose StatementBegin
-INSERT INTO genericUser (name, age, gender) VALUES
-('John Doe', 30, 'Male'),
-('Joanna Kim', 35, 'Female'),
-('Keith Dodds', 20, 'Nonbinary'),
-('Mark Adams', 15, 'Male'),
-('Olivia Craine', 70, 'Female'),
-('Liz Lizzle', 65, 'Female'),
-('Taylor Swift', 30, 'Female'),
-('Kim Petras', 29, 'Female');
+INSERT INTO genericUser (name, email, age, gender, passwordHash) VALUES
+('John Doe', 'john.doe@mailinator.com', 30, 'Male', 'abc123'),
+('Joanna Kim', 'joanna.kim@mailinator.com', 35, 'Female', 'abc123'),
+('Keith Williams', 'keith.williams@mailinator.com', 20, 'Nonbinary', 'abc123'),
+('Mark Adams', 'mark.adams@mailinator.com', 15, 'Male', 'abc123'),
+('Olivia Evans', 'olivia.evans@mailinator.com', 70, 'Female', 'abc123'),
+('Liz Lizzle', 'liz.lizzle@mailinator.com', 65, 'Female', 'abc123'),
+('Paul Evans', 'paul.evans@mailinator.com', 30, 'Female', 'abc123'),
+('Pauline Harris', 'pauline.harris@mailinator.com', 29, 'Female', 'abc123');
 
 INSERT INTO rolesOnUser VALUES
 (1, 1),
