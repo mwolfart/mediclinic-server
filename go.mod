@@ -5,9 +5,13 @@ go 1.21.5
 require github.com/lib/pq v1.10.9
 
 require (
+	github.com/gofrs/uuid v4.2.0+incompatible // indirect
+	github.com/kat-co/vala v0.0.0-20170210184112-42e1d8b61f12 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
+	github.com/volatiletech/null/v8 v8.1.2 // indirect
+	github.com/volatiletech/randomize v0.0.1 // indirect
 )
 
 require (
