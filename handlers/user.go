@@ -7,6 +7,7 @@ import (
 )
 
 func GetUserHandler(c *gin.Context) {
+	// users, err := models.Users().AllG(ctx)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "List of users",
 	})

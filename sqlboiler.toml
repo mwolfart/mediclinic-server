@@ -1,0 +1,6 @@
+[psql]
+  dbname = "medical-clinic"
+  host   = "db"
+  port   = 5432
+  user   = "dbadmin"
+  pass   = "keyboard"

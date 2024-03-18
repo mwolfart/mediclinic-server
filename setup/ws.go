@@ -20,7 +20,7 @@ func StartWS() {
 	router := gin.Default()
 
 	for _, r := range routes {
-		router.Handle(r.Method, "/user", r.Handler)
+		router.Handle(r.Method, r.Path, r.Handler)
 	}
 
 	server := &http.Server{

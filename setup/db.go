@@ -14,17 +14,16 @@ const (
 	dbname   = "postgres"
 )
 
-func StartDB() *sql.DB {
+func StartDB() (*sql.DB, error) {
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
 	db, err := sql.Open("postgres", psqlconn)
 	if err != nil {
-		log.Fatal("Error opening connection to database")
-		return nil
+		return nil, err
 	}
 
 	defer db.Close()
 
 	log.Println("DB connected")
-	return db
+	return db, nil
 }
