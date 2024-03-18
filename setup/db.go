@@ -4,18 +4,25 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-)
+	"os"
 
-const (
-	host     = "db"
-	port     = 5432
-	user     = "postgres"
-	password = "postgres"
-	dbname   = "postgres"
+	"github.com/joho/godotenv"
 )
 
 func StartDB() (*sql.DB, error) {
-	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		return nil, err
+	}
+
+	host := os.Getenv("DB_HOSTNAME")
+	port := os.Getenv("DB_PORT")
+	user := os.Getenv("DB_USERNAME")
+	password := os.Getenv("DB_PASSWORD")
+	dbname := os.Getenv("DB_NAME")
+
+	psqlconn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
 	db, err := sql.Open("postgres", psqlconn)
 	if err != nil {
