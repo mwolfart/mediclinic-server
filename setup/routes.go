@@ -13,6 +13,7 @@ type Route struct {
 }
 
 var routes []*Route = []*Route{
+	{Method: "POST", Path: "/login", Handler: handlers.LoginHandler},
 	{Method: "GET", Path: "/users", Handler: handlers.GetUserHandler},
 	{Method: "POST", Path: "/users", Handler: handlers.AddUserHandler},
 	{Method: "PATCH", Path: "/users", Handler: handlers.UpdateUserHandler},
