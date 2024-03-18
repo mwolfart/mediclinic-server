@@ -42,7 +42,7 @@ func AddUserHandler(c *gin.Context) {
 		})
 	}
 
-	var user *models.Genericuser
+	user := &models.Genericuser{}
 	user.Name = payload.Name
 	user.Age = null.Int{Int: payload.Age, Valid: true}
 	user.Gender = null.String{String: payload.Gender, Valid: true}
