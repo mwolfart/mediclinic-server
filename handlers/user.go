@@ -1,15 +1,22 @@
 package handlers
 
 import (
+	"fmt"
+	"medclin/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetUserHandler(c *gin.Context) {
-	// users, err := models.Genericuser().AllG(c)
+	users, err := models.Genericusers().AllG(c)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": fmt.Sprintf("Unknown error: %s", err),
+		})
+	}
 	c.JSON(http.StatusOK, gin.H{
-		"message": "List of users",
+		"data": users,
 	})
 }
 

@@ -15,6 +15,6 @@ func main() {
 		log.Fatal("Error opening connection to database")
 		os.Exit(1)
 	}
-	setup.StartWS()
 	boil.SetDB(db)
+	setup.StartWS()
 }
