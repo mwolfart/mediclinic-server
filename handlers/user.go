@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"fmt"
 	"medclin/models"
 	"net/http"
@@ -20,7 +21,9 @@ type CreateUserPayload struct {
 }
 
 func GetUserHandler(c *gin.Context) {
-	users, err := models.Genericusers().AllG(c)
+	ctx := context.Background()
+
+	users, err := models.Genericusers().All(ctx, db)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": fmt.Sprintf("Unknown error: %s", err),
@@ -32,9 +35,13 @@ func GetUserHandler(c *gin.Context) {
 }
 
 func AddUserHandler(c *gin.Context) {
-	// TODO check permissions
+	ok, err := HasPermission(c, "manager")
+	if !ok || err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{})
+	}
+
 	var payload *CreateUserPayload
-	err := c.BindJSON(&payload)
+	err = c.BindJSON(&payload)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -58,7 +65,7 @@ func AddUserHandler(c *gin.Context) {
 	}
 	user.Passwordhash = string(hashedPassword)
 
-	err = user.InsertG(c, boil.Infer())
+	err = user.Insert(c, db, boil.Infer())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Error inserting data",

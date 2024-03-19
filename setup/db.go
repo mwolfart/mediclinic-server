@@ -21,8 +21,6 @@ func StartDB() (*sql.DB, error) {
 		return nil, err
 	}
 
-	defer db.Close()
-
 	log.Println("DB connected")
 	return db, nil
 }

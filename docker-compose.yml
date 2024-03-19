@@ -12,6 +12,7 @@ services:
       - DB_USERNAME=dbadmin
       - DB_PASSWORD=keyboard
       - DB_NAME=medical-clinic
+      - TOKEN_MIN_LIFESPAN=30
     depends_on:
       db:
         condition: service_healthy

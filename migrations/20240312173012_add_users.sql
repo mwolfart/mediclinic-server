@@ -1,8 +1,8 @@
 -- +goose Up
 -- +goose StatementBegin
 INSERT INTO genericUser (name, email, age, gender, passwordHash) VALUES
-('John Doe', 'john.doe@mailinator.com', 30, 'Male', 'abc123'),
-('Joanna Kim', 'joanna.kim@mailinator.com', 35, 'Female', 'abc123'),
+('John Doe', 'john.doe@mailinator.com', 30, 'Male', '$2a$10$tTUZo5C31y5/mnvrexv4jubIGZCy8f4Xe8Hz2v3s1IRZwGJxB1DSK'),
+('Joanna Kim', 'joanna.kim@mailinator.com', 35, 'Female', '$2a$10$tTUZo5C31y5/mnvrexv4jubIGZCy8f4Xe8Hz2v3s1IRZwGJxB1DSK'),
 ('Keith Williams', 'keith.williams@mailinator.com', 20, 'Nonbinary', 'abc123'),
 ('Mark Adams', 'mark.adams@mailinator.com', 15, 'Male', 'abc123'),
 ('Olivia Evans', 'olivia.evans@mailinator.com', 70, 'Female', 'abc123'),
