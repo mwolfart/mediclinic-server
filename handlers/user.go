@@ -28,6 +28,7 @@ func GetUserHandler(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": fmt.Sprintf("Unknown error: %s", err),
 		})
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"data": users,
@@ -38,6 +39,7 @@ func AddUserHandler(c *gin.Context) {
 	ok, err := HasPermission(c, "manager")
 	if !ok || err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{})
+		return
 	}
 
 	var payload *CreateUserPayload
@@ -47,6 +49,7 @@ func AddUserHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Payload format is invalid",
 		})
+		return
 	}
 
 	user := &models.Genericuser{}
@@ -62,6 +65,7 @@ func AddUserHandler(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Error generating hash from password",
 		})
+		return
 	}
 	user.Passwordhash = string(hashedPassword)
 
@@ -70,6 +74,7 @@ func AddUserHandler(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Error inserting data",
 		})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{})

@@ -26,20 +26,23 @@ func LoginHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Payload format is invalid. Required: (email, password)",
 		})
+		return
 	}
 
-	hash, err := bcrypt.GenerateFromPassword([]byte(payload.Password), bcrypt.DefaultCost)
+	user, err := models.Genericusers(qm.Where("email = ?", payload.Email)).One(ctx, db)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"message": "Invalid credentials",
 		})
+		return
 	}
 
-	user, err := models.Genericusers(qm.Where("email = ? AND passwordHash = ?", payload.Email, string(hash))).One(ctx, db)
+	err = bcrypt.CompareHashAndPassword([]byte(user.Passwordhash), []byte(payload.Password))
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"message": "Invalid credentials",
 		})
+		return
 	}
 
 	token, err := utils.GenerateToken(user.ID)
@@ -47,6 +50,7 @@ func LoginHandler(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Error fetching token",
 		})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
