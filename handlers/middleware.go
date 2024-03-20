@@ -17,7 +17,7 @@ func HasPermission(c *gin.Context, roles ...string) (bool, error) {
 		return false, err
 	}
 
-	user, err := models.Genericusers(qm.Where("id = ?", userId)).One(ctx, db)
+	user, err := models.Genericusers(qm.Where("id = ?", userId), qm.Load(models.GenericuserRels.RoleidRoles)).One(ctx, db)
 	if err != nil {
 		return false, err
 	}
