@@ -19,6 +19,7 @@ type CreateUserPayload struct {
 	Gender   string `json:"gender"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
+	RoleId   int    `json:"role_id"`
 }
 
 type UpdateUserPayload struct {
@@ -26,6 +27,7 @@ type UpdateUserPayload struct {
 	Age    int    `json:"age,omitempty"`
 	Gender string `json:"gender,omitempty"`
 	Email  string `json:"email,omitempty"`
+	RoleId int    `json:"role_id"`
 }
 
 func GetUsersHandler(c *gin.Context) {
@@ -78,6 +80,15 @@ func AddUserHandler(c *gin.Context) {
 		return
 	}
 	user.Passwordhash = string(hashedPassword)
+	role, err := models.Roles(qm.Where("id = ?", payload.RoleId)).One(c, db)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Role id specified could not be found",
+		})
+		return
+	}
+
+	user.SetRoleidRoles(c, db, true, role)
 
 	err = user.Insert(c, db, boil.Infer())
 	if err != nil {
@@ -131,6 +142,16 @@ func UpdateUserHandler(c *gin.Context) {
 	}
 	if payload.Name != "" {
 		user.Name = payload.Name
+	}
+	if payload.RoleId != 0 {
+		role, err := models.Roles(qm.Where("id = ?", payload.RoleId)).One(c, db)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "Role id specified could not be found",
+			})
+			return
+		}
+		user.SetRoleidRoles(c, db, true, role)
 	}
 	user.Update(c, db, boil.Infer())
 
