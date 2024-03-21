@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"context"
 	"fmt"
 	"medclin/models"
 	"net/http"
@@ -31,9 +30,7 @@ type UpdateUserPayload struct {
 }
 
 func GetUsersHandler(c *gin.Context) {
-	ctx := context.Background()
-
-	users, err := models.Genericusers(qm.Select("id", "name", "gender", "age")).All(ctx, db)
+	users, err := models.Genericusers(qm.Select("id", "name", "gender", "age")).All(c, db)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": fmt.Sprintf("Unknown error: %s", err),
