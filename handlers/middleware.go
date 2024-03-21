@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"context"
 	"medclin/models"
 	"medclin/utils"
 
@@ -10,14 +9,12 @@ import (
 )
 
 func HasPermission(c *gin.Context, roles ...string) (bool, error) {
-	ctx := context.Background()
-
 	userId, err := utils.UserEmailFromToken(c)
 	if err != nil {
 		return false, err
 	}
 
-	user, err := models.Genericusers(qm.Where("id = ?", userId), qm.Load(models.GenericuserRels.RoleidRoles)).One(ctx, db)
+	user, err := models.Genericusers(qm.Where("id = ?", userId), qm.Load(models.GenericuserRels.RoleidRoles)).One(c, db)
 	if err != nil {
 		return false, err
 	}
