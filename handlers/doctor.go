@@ -19,7 +19,7 @@ type AddSpecialtyPayload struct {
 }
 
 func addInsuranceToDoctorById(c *gin.Context, id int) {
-	doctor, err := models.Doctors(qm.Where("id = ?", id), qm.Load(models.DoctorRels.InsuranceidInsurances)).One(c, db)
+	doctor, err := models.Doctors(qm.Where("userId = ?", id), qm.Load(models.DoctorRels.InsuranceidInsurances)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No doctor data for the specified user")
 		return
@@ -32,7 +32,7 @@ func addInsuranceToDoctorById(c *gin.Context, id int) {
 		return
 	}
 
-	insurance, err := models.Insurances(qm.Where("id = ?", payload.InsuranceId)).One(c, db)
+	insurance, err := models.Insurances(qm.Where("userId = ?", payload.InsuranceId)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "Insurance id specified could not be found")
 		return
@@ -48,14 +48,14 @@ func addInsuranceToDoctorById(c *gin.Context, id int) {
 }
 
 func removeInsuranceFromDoctorById(c *gin.Context, id int) {
-	doctor, err := models.Doctors(qm.Where("id = ?", id), qm.Load(models.DoctorRels.InsuranceidInsurances)).One(c, db)
+	doctor, err := models.Doctors(qm.Where("userId = ?", id), qm.Load(models.DoctorRels.InsuranceidInsurances)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No doctor data for the specified user")
 		return
 	}
 
 	insuranceId := c.Param(("inId"))
-	insurance, err := models.Insurances(qm.Where("id = ?", insuranceId)).One(c, db)
+	insurance, err := models.Insurances(qm.Where("userId = ?", insuranceId)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "Insurance id specified could not be found")
 		return
@@ -71,7 +71,7 @@ func removeInsuranceFromDoctorById(c *gin.Context, id int) {
 }
 
 func addSpecialtyToDoctorById(c *gin.Context, id int) {
-	doctor, err := models.Doctors(qm.Where("id = ?", id), qm.Load(models.DoctorRels.SpecialtyidSpecialties)).One(c, db)
+	doctor, err := models.Doctors(qm.Where("userId = ?", id), qm.Load(models.DoctorRels.SpecialtyidSpecialties)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No doctor data for the specified user")
 		return
@@ -84,7 +84,7 @@ func addSpecialtyToDoctorById(c *gin.Context, id int) {
 		return
 	}
 
-	specialty, err := models.Specialties(qm.Where("id = ?", payload.SpecialtyId)).One(c, db)
+	specialty, err := models.Specialties(qm.Where("userId = ?", payload.SpecialtyId)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "Specialty id specified could not be found")
 		return
@@ -100,14 +100,14 @@ func addSpecialtyToDoctorById(c *gin.Context, id int) {
 }
 
 func removeSpecialtyFromDoctorById(c *gin.Context, id int) {
-	doctor, err := models.Doctors(qm.Where("id = ?", id), qm.Load(models.DoctorRels.SpecialtyidSpecialties)).One(c, db)
+	doctor, err := models.Doctors(qm.Where("userId = ?", id), qm.Load(models.DoctorRels.SpecialtyidSpecialties)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No doctor data for the specified user")
 		return
 	}
 
 	specialtyId := c.Param(("spId"))
-	specialty, err := models.Specialties(qm.Where("id = ?", specialtyId)).One(c, db)
+	specialty, err := models.Specialties(qm.Where("userId = ?", specialtyId)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "Specialty id specified could not be found")
 		return
@@ -129,7 +129,7 @@ func GetOwnSupportedInsurances(c *gin.Context) {
 		return
 	}
 
-	doctor, err := models.Doctors(qm.Where("id = ?", userId), qm.Load(models.DoctorRels.InsuranceidInsurances)).One(c, db)
+	doctor, err := models.Doctors(qm.Where("userId = ?", userId), qm.Load(models.DoctorRels.InsuranceidInsurances)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No doctor data for the specified user")
 		return
@@ -147,7 +147,7 @@ func GetDoctorSupportedInsurances(c *gin.Context) {
 	}
 
 	doctorId := c.Param(("id"))
-	doctor, err := models.Doctors(qm.Where("id = ?", doctorId), qm.Load(models.DoctorRels.InsuranceidInsurances)).One(c, db)
+	doctor, err := models.Doctors(qm.Where("userId = ?", doctorId), qm.Load(models.DoctorRels.InsuranceidInsurances)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No doctor data for the specified user")
 		return
@@ -216,7 +216,7 @@ func GetOwnSpecialties(c *gin.Context) {
 		return
 	}
 
-	doctor, err := models.Doctors(qm.Where("id = ?", userId), qm.Load(models.DoctorRels.SpecialtyidSpecialties)).One(c, db)
+	doctor, err := models.Doctors(qm.Where("userId = ?", userId), qm.Load(models.DoctorRels.SpecialtyidSpecialties)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No doctor data for the specified user")
 		return
@@ -234,7 +234,7 @@ func GetDoctorSpecialties(c *gin.Context) {
 	}
 
 	doctorId := c.Param(("id"))
-	doctor, err := models.Doctors(qm.Where("id = ?", doctorId), qm.Load(models.DoctorRels.SpecialtyidSpecialties)).One(c, db)
+	doctor, err := models.Doctors(qm.Where("userId = ?", doctorId), qm.Load(models.DoctorRels.SpecialtyidSpecialties)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No doctor data for the specified user")
 		return

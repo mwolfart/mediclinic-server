@@ -15,7 +15,7 @@ type AddInsurancePayload struct {
 }
 
 func addInsuranceToPatientById(c *gin.Context, id int) {
-	patient, err := models.Patients(qm.Where("id = ?", id), qm.Load(models.PatientRels.InsuranceidInsurances)).One(c, db)
+	patient, err := models.Patients(qm.Where("userId = ?", id), qm.Load(models.PatientRels.InsuranceidInsurances)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No patient data for the specified user")
 		return
@@ -28,7 +28,7 @@ func addInsuranceToPatientById(c *gin.Context, id int) {
 		return
 	}
 
-	insurance, err := models.Insurances(qm.Where("id = ?", payload.InsuranceId)).One(c, db)
+	insurance, err := models.Insurances(qm.Where("userId = ?", payload.InsuranceId)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "Insurance id specified could not be found")
 		return
@@ -44,14 +44,14 @@ func addInsuranceToPatientById(c *gin.Context, id int) {
 }
 
 func removeInsuranceFromPatientById(c *gin.Context, id int) {
-	patient, err := models.Patients(qm.Where("id = ?", id), qm.Load(models.PatientRels.InsuranceidInsurances)).One(c, db)
+	patient, err := models.Patients(qm.Where("userId = ?", id), qm.Load(models.PatientRels.InsuranceidInsurances)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No patient data for the specified user")
 		return
 	}
 
 	insuranceId := c.Param(("inId"))
-	insurance, err := models.Insurances(qm.Where("id = ?", insuranceId)).One(c, db)
+	insurance, err := models.Insurances(qm.Where("userId = ?", insuranceId)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "Insurance id specified could not be found")
 		return
@@ -73,7 +73,7 @@ func GetOwnInsurances(c *gin.Context) {
 		return
 	}
 
-	patient, err := models.Patients(qm.Where("id = ?", userId), qm.Load(models.PatientRels.InsuranceidInsurances)).One(c, db)
+	patient, err := models.Patients(qm.Where("userId = ?", userId), qm.Load(models.PatientRels.InsuranceidInsurances)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No patient data for the specified user")
 		return
@@ -91,7 +91,7 @@ func GetPatientInsurances(c *gin.Context) {
 	}
 
 	patientId := c.Param(("id"))
-	patient, err := models.Patients(qm.Where("id = ?", patientId), qm.Load(models.PatientRels.InsuranceidInsurances)).One(c, db)
+	patient, err := models.Patients(qm.Where("userId = ?", patientId), qm.Load(models.PatientRels.InsuranceidInsurances)).One(c, db)
 	if err != nil {
 		utils.SendErrorMessage(c, http.StatusNotFound, "No patient data for the specified user")
 		return
