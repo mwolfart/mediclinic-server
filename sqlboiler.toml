@@ -1,7 +1,7 @@
 [psql]
-  dbname = "medical-clinic"
-  host   = "localhost"
+  dbname = "mediclinic"
+  host   = "ep-frosty-river-a5jkdsef.us-east-2.aws.neon.tech"
   port   = 5432
-  user   = "dbadmin"
-  pass   = "keyboard"
-  sslmode = "disable"
+  user   = "mediclinic_owner"
+  pass   = "KmvX3UN6pQru"
+  sslmode = "require"
