@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"medclin/handlers"
 	"medclin/setup"
@@ -14,7 +15,7 @@ func main() {
 	err := godotenv.Load(".env")
 
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		fmt.Println("Error loading .env file")
 	}
 
 	db, err := setup.StartDB()
